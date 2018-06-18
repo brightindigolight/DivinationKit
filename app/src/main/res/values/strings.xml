@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Divination Kit</string>
+    <string name="login_welcome_msg">Welcome to the Club !</string>
 </resources>
