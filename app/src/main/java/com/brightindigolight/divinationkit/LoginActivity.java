@@ -24,8 +24,6 @@ public class LoginActivity extends AppCompatActivity {
 
         mTextViewRegisterHere = findViewById(R.id.editTextRegister);
         SpannableString ss = new SpannableString(getString(R.string.not_a_member_yet_register_here));
-        ForegroundColorSpan fcs = new ForegroundColorSpan(Color.RED);
-        ss.setSpan(fcs,18,31, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ClickableSpan cs = new ClickableSpan() {
             @Override
             public void onClick(View view) {

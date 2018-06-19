@@ -24,7 +24,6 @@ public class SignUpActivity extends AppCompatActivity {
         mTextLoginHere= findViewById(R.id.textLoginHere);
 
         SpannableString ss = new SpannableString(getString(R.string.already_a_member_login_here));
-        //ForegroundColorSpan fcs = new ForegroundColorSpan(Color.RED);
 
         ClickableSpan cs = new ClickableSpan() {
             @Override
