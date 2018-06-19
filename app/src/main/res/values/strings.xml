@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Divination Kit</string>
     <string name="login_welcome_msg">Welcome to the Club !</string>
+    <string name="enter_your_username_here">Username</string>
+    <string name="email_id">Email ID</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="not_a_member_yet_register_here">Not a member yet? Register Here</string>
 </resources>

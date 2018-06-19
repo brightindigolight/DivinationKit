@@ -2,11 +2,12 @@
 <resources>
     <color name="colorPrimary">#3949AB</color>
     <color name="colorPrimaryDark">#010a1a</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#006DAA</color>
     <color name= "indigoShadeDark">#003559</color>
     <color name="indigoShadeLight">#006DAA</color>
     <color name="indigoShadeDarkest">#061A40</color>
     <color name="secondaryColor1">#E53835</color>
     <color name="secondaryColor2">#FFF263</color>
+    <color name="secondaryColor3">#c96b14</color>
     <color name="whiteColor">#ffffff</color>
 </resources>
