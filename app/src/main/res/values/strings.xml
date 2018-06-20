@@ -10,4 +10,12 @@
     <string name="register">Register</string>
     <string name="already_a_member_login_here">Already a member? Login Here</string>
     <string name="its_free_and_simple">Its Free and Simple</string>
+    <string name="username_cannot_be_empty">Username cannot be empty!</string>
+    <string name="username_max_length_error">Username cannot be more than 25 characters length</string>
+    <string name="email_cannot_be_empty">Email cannot be empty!</string>
+    <string name="password_cannot_be_empty">Password cannot be empty!</string>
+    <string name="password_min_length_error">Password must be at least 6 characters long!</string>
+    <string name="confirm_password_cannot_be_empty">Confirm password cannot be empty!</string>
+    <string name="confirm_password_must_match_the_password">Confirm password must match the password!</string>
+    <string name="enter_valid_email_error">Please enter a valid email ID</string>
 </resources>
