@@ -3,6 +3,7 @@ package com.brightindigolight.divinationkit;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Debug;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,15 +16,27 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 public class SignUpActivity extends AppCompatActivity {
 
     private TextView mTextLoginHere;
     private TextInputLayout mTextInputEmail, mTextInputPassword, mTextInputUsername, mTextInputConfirmPassword;
     private Button mButtonRegister;
+    private ProgressBar mPB;
 
     private String mEmail,mUsername,mPassword,mConfirmPassword;
+
+    private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +48,43 @@ public class SignUpActivity extends AppCompatActivity {
         mTextInputUsername= findViewById(R.id.text_input_username);
         mTextInputPassword = findViewById(R.id.text_input_password);
         mTextInputConfirmPassword = findViewById(R.id.text_input_confirm_password);
+        mPB = findViewById(R.id.progressBar3);
+        mPB.setVisibility(View.GONE);
         mButtonRegister = findViewById(R.id.btnRegister);
 
         mButtonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(validateUserInput()){
-                    //todo firebase signup process
+                if (validateUserInput()) {
+                    mPB.setVisibility(View.VISIBLE);
+                    mAuth.createUserWithEmailAndPassword(mEmail, mPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            mPB.setVisibility(View.GONE);
+                            if (task.isSuccessful()) {
+                                Toast.makeText(SignUpActivity.this, R.string.registered_successfully_msg, Toast.LENGTH_SHORT).show();
+                                mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            Toast.makeText(SignUpActivity.this, R.string.verification_mail_Sent, Toast.LENGTH_LONG).show();
+
+                                        }else{
+                                            Toast.makeText(SignUpActivity.this, R.string.verification_mail_couldnot_be_send, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                                mAuth.signOut();
+                                gotoLoginActivity();
+                            } else if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                Toast.makeText(SignUpActivity.this, R.string.email_already_registered, Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(SignUpActivity.this, R.string.registration_failed, Toast.LENGTH_SHORT).show();
+                            }
+
+
+                        }
+                    });
                 }
             }
         });
@@ -62,6 +105,18 @@ public class SignUpActivity extends AppCompatActivity {
 
         mTextLoginHere.setText(ss);
         mTextLoginHere.setMovementMethod(LinkMovementMethod.getInstance());
+
+        mAuth = FirebaseAuth.getInstance();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        if(mAuth.getCurrentUser()!=null){
+            startActivity(new Intent(SignUpActivity.this,MainMenuActivity.class));
+            finish();
+        }
     }
 
     private void gotoLoginActivity(){
